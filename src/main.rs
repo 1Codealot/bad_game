@@ -49,7 +49,7 @@ fn main() {
 
     // UPDATE
     while !rl.window_should_close() {
-        let enemy_speed_multiplier = score / 10 + 1;
+        let enemy_speed_multiplier: i32 = (score / 10 + 1)*2;
         if !game_over{
             let mut screen: RaylibDrawHandle<'_> = rl.begin_drawing(&thread);
             screen.clear_background(Color::WHITE);
@@ -65,12 +65,12 @@ fn main() {
             
             screen.draw_rectangle(player.x, player.y, player.size, player.size, player.color);
 
-            if start_time.elapsed().unwrap().as_secs() % 4 == 2 {
+            if start_time.elapsed().unwrap().as_millis() % 166 == 0 {
                 let_enemy_fall = true;
             }
 
             if let_enemy_fall {
-                enemy.y += 10 * enemy_speed_multiplier;
+                enemy.y += 10 + enemy_speed_multiplier;
                 screen.draw_rectangle(enemy.x, enemy.y, enemy.size, enemy.size, enemy.color);
 
                 if enemy.y > height {
